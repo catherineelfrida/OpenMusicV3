@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import config from './utils/config.js'
 
 import Hapi from '@hapi/hapi'
 import Jwt from '@hapi/jwt'
@@ -42,7 +42,6 @@ import StorageService from './services/storage/StorageService.js'
 
 import CacheService from './services/redis/CacheService.js'
 
-dotenv.config()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -58,8 +57,8 @@ const init = async () => {
   )
 
   const server = Hapi.server({
-    port: process.env.PORT,
-    host: process.env.HOST,
+    port: config.server.port,
+    host: config.server.host,
     routes: {
       cors: {
         origin: ['*']
@@ -77,12 +76,12 @@ const init = async () => {
   ])
 
   server.auth.strategy('openmusic_jwt', 'jwt', {
-    keys: process.env.ACCESS_TOKEN_KEY,
+    keys: config.jwt.accesskey,
     verify: {
       aud: false,
       iss: false,
       sub: false,
-      maxAgeSec: process.env.ACCESS_TOKEN_AGE
+      maxAgeSec: config.jwt.accessage
     },
     validate: (artifacts) => ({
       isValid: true,

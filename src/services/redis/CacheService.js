@@ -1,10 +1,11 @@
 import redis from 'redis'
+import config from '../../utils/config.js'
 
 class CacheService {
   constructor () {
     this._client = redis.createClient({
       socket: {
-        host: process.env.REDIS_SERVER
+        host: config.redis.host
       }
     })
 
