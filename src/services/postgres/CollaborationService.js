@@ -22,7 +22,7 @@ class CollaborationsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new InvariantError('Kolaborasi gagal ditambahkan')
+      throw new InvariantError('Collaboration failed to add. | Kolaborasi gagal ditambahkan.')
     }
 
     await this._cacheService.delete(`playlist:${userId}`)
@@ -40,7 +40,7 @@ class CollaborationsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new InvariantError('Kolaborasi gagal dihapus')
+      throw new InvariantError('Collaboration failed to delete. | Kolaborasi gagal dihapus.')
     }
 
     await this._cacheService.delete(`playlist:${userId}`)
@@ -56,7 +56,7 @@ class CollaborationsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new AuthorizationError('Kolaborasi gagal diverifikasi')
+      throw new AuthorizationError('Collaboration failed to verify. | Kolaborasi gagal diverifikasi.')
     }
   }
 }

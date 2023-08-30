@@ -22,7 +22,7 @@ class AlbumsService {
     const result = await this._pool.query(query)
 
     if (!result.rows[0].id) {
-      throw new InvariantError('Album gagal ditambahkan')
+      throw new InvariantError('Album failed to add. | Album gagal ditambahkan.')
     }
 
     return result.rows[0].id
@@ -43,7 +43,7 @@ class AlbumsService {
     const songsResult = await this._pool.query(queryGetSongs)
 
     if (!albumResult.rows.length) {
-      throw new NotFoundError('Album tidak ditemukan')
+      throw new NotFoundError('Albums not found. | Album tidak ditemukan.')
     }
 
     const album = albumResult.rows[0]
@@ -67,7 +67,7 @@ class AlbumsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Gagal memperbarui album. Id tidak ditemukan.')
+      throw new NotFoundError('Failed to update album. ID not found. | Gagal memperbarui album. Id tidak ditemukan.')
     }
   }
 
@@ -80,7 +80,7 @@ class AlbumsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Album gagal dihapus. Id tidak ditemukan.')
+      throw new NotFoundError('Album failed to delete. ID not found. | Album gagal dihapus. Id tidak ditemukan.')
     }
   }
 
@@ -93,7 +93,7 @@ class AlbumsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Gagal memperbarui album. Id tidak ditemukan.')
+      throw new NotFoundError('Failed to update album. ID not found. | Gagal memperbarui album. Id tidak ditemukan.')
     }
   }
 
@@ -117,10 +117,10 @@ class AlbumsService {
       const result = await this._pool.query(query)
 
       if (!result.rows[0].id) {
-        throw new InvariantError('Gagal menambahkan like. Id tidak ditemukan.')
+        throw new InvariantError('Failed to add likes. ID not found. | Gagal menambahkan like. Id tidak ditemukan.')
       }
     } else {
-      throw new InvariantError('Gagal menambahkan like. Anda sudah memberikan like pada album ini.')
+      throw new InvariantError('Failed to add likes. You have already liked this album. | Gagal menambahkan like. Anda sudah memberikan like pada album ini.')
     }
 
     await this._cacheService.delete(`album-likes:${albumId}`)
@@ -137,7 +137,7 @@ class AlbumsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Gagal menghapus like')
+      throw new NotFoundError('Failed to delete likes. | Gagal menghapus like.')
     }
   }
 
@@ -158,12 +158,12 @@ class AlbumsService {
       const result = await this._pool.query(query)
 
       if (!result.rows.length) {
-        throw new NotFoundError('Gagal mengambil like')
+        throw new NotFoundError('Failed to fetch likes. | Gagal mengambil like.')
       }
 
       const likes = parseInt(result.rows[0].count)
 
-      await this._cacheService.set(`album-likes:${albumId}`, likes, 1800)
+      await this._cacheService.set(`album-likes:${albumId}`, likes)
       return {
         cache: false,
         likes

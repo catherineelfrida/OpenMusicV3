@@ -21,7 +21,7 @@ class SongsService {
     const result = await this._pool.query(query)
 
     if (!result.rows[0].id) {
-      throw new InvariantError('Musik gagal ditambahkan')
+      throw new InvariantError('Music failed to add. | Musik gagal ditambahkan.')
     }
 
     return result.rows[0].id
@@ -64,7 +64,7 @@ class SongsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Album tidak ditemukan')
+      throw new NotFoundError('Album not found. | Album tidak ditemukan.')
     }
 
     return result.rows[0]
@@ -88,7 +88,7 @@ class SongsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Gagal memperbarui musik. Id tidak ditemukan.')
+      throw new NotFoundError('Failed to update music. ID not found. | Gagal memperbarui musik. Id tidak ditemukan.')
     }
   }
 
@@ -101,7 +101,7 @@ class SongsService {
     const result = await this._pool.query(query)
 
     if (!result.rows.length) {
-      throw new NotFoundError('Musik gagal dihapus. Id tidak ditemukan.')
+      throw new NotFoundError('Music failed to delete. ID not found. | Musik gagal dihapus. Id tidak ditemukan.')
     }
   }
 }
