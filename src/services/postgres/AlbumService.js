@@ -116,7 +116,7 @@ class AlbumsService {
 
       const result = await this._pool.query(query)
 
-      if (!result.rows[0].id) {
+      if (!result.rows.length) {
         throw new InvariantError('Failed to add likes. ID not found. | Gagal menambahkan like. Id tidak ditemukan.')
       }
     } else {
@@ -139,6 +139,7 @@ class AlbumsService {
     if (!result.rows.length) {
       throw new NotFoundError('Failed to delete likes. | Gagal menghapus like.')
     }
+    await this._cacheService.delete(`album-likes:${albumId}`)
   }
 
   async getAlbumLikesById (albumId) {
@@ -149,7 +150,7 @@ class AlbumsService {
         cache: true,
         likes
       }
-    } catch {
+    } catch (error) {
       const query = {
         text: 'SELECT COUNT(id) FROM user_album_likes WHERE album_id = $1',
         values: [albumId]

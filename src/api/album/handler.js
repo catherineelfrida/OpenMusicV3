@@ -99,7 +99,7 @@ class AlbumsHandler {
         likes
       }
     })
-    if (cache) response.header('X-Data-Source', cache)
+    if (cache) response.header('X-Data-Source', 'cache')
     return response
   }
 }
