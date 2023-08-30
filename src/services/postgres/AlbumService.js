@@ -165,7 +165,7 @@ class AlbumsService {
 
       await this._cacheService.set(`album-likes:${albumId}`, likes, 1800)
       return {
-        // cache: false,
+        cache: false,
         likes
       }
     }
