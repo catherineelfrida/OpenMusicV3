@@ -1,5 +1,4 @@
 import autoBind from 'auto-bind'
-import { config } from 'dotenv'
 
 class AlbumsHandler {
   constructor (albumsService, storageService, validator) {
@@ -58,7 +57,7 @@ class AlbumsHandler {
     const { cover } = request.payload
     this._validator.validateAlbumCoverHeaders(cover.hapi.headers)
     const filename = await this._storageService.writeFile(cover, cover.hapi)
-    const url = `http://${config.server.host}:${config.server.port}/upload/images/${filename}`
+    const url = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`
     await this._albumsService.editAlbumCoverById(id, url)
     const response = h.response({
       status: 'success',
